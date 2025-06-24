@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inscription étape par étape</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+
+    .exit-button {
+      position: absolute;
+      top: 20px;
+      left: 10px;
+      background-color: #ff4d4d;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    .form-wrapper {
+      width: 70%;
+      margin: 60px auto 20px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    .progress-bar-container {
+      height: 10px;
+      background: #ddd;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #F4C76D;
+      transition: width 0.3s ease;
+    }
+
+    h1.title {
+      text-align: center;
+      color: #171B4E;
+      margin: 20px 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .step {
+      display: none;
+      padding-bottom: 20px;
+      margin-bottom: 50px;
+    }
+
+    .step + .step {
+      border-top: 1px solid #ddd;
+      padding-top: 40px;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    input, select, textarea {
+      display: block;
+      width: 100%;
+      margin-top: 30px;
+      border: none;
+      border-bottom: 2px solid #ccc;
+      background: transparent;
+      padding: 10px 5px;
+      font-size: 1em;
+      outline: none;
+      transition: border-color 0.3s ease;
+      color: #000;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #888;
+      font-style: italic;
+      font-size: 0.95em;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-bottom: 2px solid #F4C76D;
+    }
+
+    .btn {
+      background: #171B4E;
+      color: white;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #0f123d;
+    }
+
+    .choice-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .choice-label {
+      flex: 1;
+      font-weight: bold;
+    }
+
+    .choice-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1em;
+      margin-left: 20px;
+    }
+
+    .choice-item button {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      background: white;
+      margin-top: 5px;
+      cursor: pointer;
+    }
+
+    .choice-item button.selected.yes {
+      background-color: #4CAF50;
+      border-color: #4CAF50;
+    }
+
+    .choice-item button.selected.no {
+      background-color: #f44336;
+      border-color: #f44336;
+    }
+
+    .btn-container-bottom-global {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 80px;
+    }
+
+    .btn-validate-center {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <button class="exit-button" onclick="confirmExit()">Quitter</button>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <h1 class="title" id="stepTitle">Bienvenue futur développeur !</h1>
+
+  <div class="form-wrapper">
+    <form id="multiStepForm" action="https://formspree.io/f/xqabyane" method="POST">
+      <!-- Étape 1 -->
+      <div class="step active">
+        <input type="text" name="nom" placeholder="Nom" required>
+        <input type="text" name="prenom" placeholder="Prénom" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <div class="btn-validate-center">
+          <button type="button" class="btn btn-next">Valider</button>
+        </div>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="step">
+        <div class="choice-group">
+          <div class="choice-label">Avez-vous entre 15 et 35 ans ?</div>
+          <div class="choice-item">
+            Oui
+            <button type="button" class="btn-choice" data-value="Oui"></button>
+          </div>
+          <div class="choice-item">
+            Non
+            <button type="button" class="btn-choice" data-value="Non"></button>
+          </div>
+          <input type="hidden" name="age_range">
+        </div>
+        <label><strong>Quelles sont vos motivations vis-à-vis de cette formation ?</strong></label>
+        <textarea name="motivation" placeholder="Expliquez vos motivations (100 mots maximum)" maxlength="600" rows="5" required></textarea>
+        <div class="btn-validate-center">
+          <button type="button" class="btn btn-next">Valider</button>
+        </div>
+      </div>
+
+      <!-- Étape 3 -->
+      <div class="step">
+        <div class="choice-group">
+          <div class="choice-label">Êtes-vous disponible du 20 juillet au 20 août ?</div>
+          <div class="choice-item">
+            Oui
+            <button type="button" class="btn-choice" data-value="Oui"></button>
+          </div>
+          <div class="choice-item">
+            Non
+            <button type="button" class="btn-choice" data-value="Non"></button>
+          </div>
+          <input type="hidden" name="disponible">
+        </div>
+
+        <div class="choice-group">
+          <div class="choice-label">La formation est à payer en deux tranches. Êtes-vous conscient de cet engagement ?</div>
+          <div class="choice-item">
+            Oui
+            <button type="button" class="btn-choice" data-value="Oui"></button>
+          </div>
+          <div class="choice-item">
+            Non
+            <button type="button" class="btn-choice" data-value="Non"></button>
+          </div>
+          <input type="hidden" name="engagement">
+        </div>
+
+        <div class="btn-validate-center">
+          <button type="button" class="btn btn-next">Valider</button>
+        </div>
+      </div>
+
+      <!-- Étape finale -->
+      <div class="step">
+        <h3>Merci pour votre inscription !</h3>
+        <p>Nous reviendrons vers vous très bientôt.</p>
+        <div class="btn-validate-center">
+          <button type="submit" class="btn">Terminer</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="btn-container-bottom-global">
+    <button type="button" class="btn btn-prev">Précédent</button>
+    <button type="button" class="btn btn-next">Suivant</button>
+  </div>
+
+  <script>
+    const steps = document.querySelectorAll('.step');
+    const progressBar = document.getElementById('progressBar');
+    const btnNextList = document.querySelectorAll('.btn-next');
+    const btnPrevList = document.querySelectorAll('.btn-prev');
+    const btnChoices = document.querySelectorAll('.btn-choice');
+    const stepTitle = document.getElementById('stepTitle');
+    let currentStep = 0;
+
+    const titles = [
+      "Bienvenue futur développeur !",
+      "Nous voulons en savoir plus sur vous",
+      "Vous êtes bientôt à la fin",
+      "Merci pour votre inscription !"
+    ];
+
+    function updateStep() {
+      steps.forEach((step, index) => {
+        step.classList.toggle('active', index === currentStep);
+      });
+      const progress = ((currentStep) / (steps.length - 1)) * 100;
+      progressBar.style.width = progress + "%";
+      stepTitle.style.opacity = 0;
+      setTimeout(() => {
+        stepTitle.textContent = titles[currentStep];
+        stepTitle.style.opacity = 1;
+      }, 300);
+    }
+
+    btnNextList.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!validateStep(currentStep)) {
+          alert("Remplissez tous les champs");
+          return;
+        }
+        if (currentStep < steps.length - 1) {
+          currentStep++;
+          updateStep();
+        }
+      });
+    });
+
+    btnPrevList.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (currentStep > 0) {
+          currentStep--;
+          updateStep();
+        }
+      });
+    });
+
+    btnChoices.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const group = btn.closest('.choice-group');
+        const hiddenInput = group.querySelector('input[type="hidden"]');
+        const value = btn.getAttribute('data-value');
+        hiddenInput.value = value;
+
+        const buttons = group.querySelectorAll('.btn-choice');
+        buttons.forEach(b => b.classList.remove('selected', 'yes', 'no'));
+        btn.classList.add('selected', value.toLowerCase());
+      });
+    });
+
+    function confirmExit() {
+      const confirmQuit = confirm("Voulez-vous vraiment quitter ? Les informations saisies seront perdues.");
+      if (confirmQuit) {
+        window.location.href = "Accueil.html";
+      }
+    }
+
+    function validateStep(stepIndex) {
+      const step = steps[stepIndex];
+      const inputs = step.querySelectorAll('input[required], textarea[required]');
+      for (let input of inputs) {
+        if (!input.value.trim()) {
+          return false;
+        }
+      }
+      const groups = step.querySelectorAll('.choice-group');
+      for (let group of groups) {
+        const choices = group.querySelectorAll('.btn-choice');
+        if (!Array.from(choices).some(choice => choice.classList.contains('selected'))) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    updateStep();
+  </script>
+</body>
+</html>
