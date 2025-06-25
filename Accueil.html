@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dfem Solutions - Crée ton site web en 1 mois</title>
   <link href="https://fonts.googleapis.com/css2?family=Advent+Pro:wght@700&display=swap" rel="stylesheet">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -31,6 +38,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+      margin-left: 100px;
     }
     nav a {
       color: #F4C76D;
@@ -240,6 +248,15 @@
       }
       /* Responsive - sur petits écrans on passe en colonne */
       @media (max-width: 768px) {
+        .menu-toggle {
+            display: block;
+            margin-left: 100px;
+            margin-right: 4px;
+            margin-top: 15px;
+          }
+          .logo{
+              height: 70px;
+          }
         .formations-content {
           flex-direction: column;
           align-items: center;
@@ -250,6 +267,162 @@
         }
         .image-formation {
           margin-top: 20px;
+        }
+        header{
+            display: flex;
+        }
+      }
+      @media (max-width: 992px) {
+        nav {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .nav-links {
+          flex-direction: column;
+          width: 100%;
+        }
+        nav a {
+          padding: 10px;
+          width: 100%;
+          text-align: left;
+        }
+        .hero h1 {
+          font-size: 2.5em;
+        }
+        .hero a {
+          font-size: 1em;
+          padding: 10px 20px;
+        }
+        .formations-content, .dfem-container, .container {
+          flex-direction: column;
+          align-items: center;
+          margin-left: 20px;
+          margin-right: 20px;
+        }
+        .texte-formation, .image-formation, .texte-dfem, .image-dfem {
+          max-width: 100%;
+          margin: 0;
+          text-align: center;
+        }
+        .texte-formation {
+          font-size: 1.2em;
+        }
+        .image-formation img, .image-dfem img, .card img {
+          width: 100%;
+          height: auto;
+        }
+        .card {
+          min-width: auto;
+          width: 90%;
+        }
+        section {
+          height: auto;
+          padding: 20px 10px;
+        }
+        header{
+            display: flex;
+        }
+      }
+  
+      @media (max-width: 600px) {
+        .hero {
+          padding: 60px 10px;
+          height: auto;
+        }
+        .hero h1 {
+          font-size: 2em;
+        }
+        h2 {
+          font-size: 2em;
+        }
+        .btn-inscrire {
+          font-size: 1em;
+          padding: 10px 16px;
+        }
+        .texte-dfem {
+          font-size: 1em;
+          margin: 0;
+        }
+        .footer-text {
+          font-size: 0.8em;
+        }
+      }
+      .menu-toggle {
+        display: none;
+        font-size: 2em;
+        color: #F4C76D;
+        cursor: pointer;
+        padding: 10px 20px;
+      }
+      header{
+        display: flex;
+    }
+      
+      @media (max-width: 992px) {
+        .menu-toggle {
+          display: block;
+          margin-left: 100px;
+          margin-right: 4px;
+          margin-top: 15px;
+        }
+        .logo{
+            height: 70px;
+        }
+        .nav-links {
+          display: none;
+          flex-direction: column;
+          width: 100%;
+          background-color: #171B4E;
+        }
+        .nav-links.show {
+          display: flex;
+        }
+      }
+      
+
+      @media (max-width: 992px) {
+        .hero h1 {
+          font-size: 2.5em;
+        }
+        .hero a {
+          font-size: 1em;
+          padding: 10px 20px;
+        }
+        .image-formation img,
+        .image-dfem img,
+        .card img {
+          width: 70%;
+          height: auto;
+        }
+        .texte-formation, .texte-dfem {
+          font-size: 1.2em;
+        }
+      }
+      
+      @media (max-width: 600px) {
+        .menu-toggle {
+            display: block;
+            margin-left: 100px;
+            margin-right: 4px;
+            margin-top: 15px;
+          }
+          .logo{
+              height: 70px;
+          }
+        .hero h1 {
+          font-size: 2em;
+        }
+        .hero a {
+          font-size: 0.9em;
+          padding: 8px 16px;
+        }
+        .image-formation img,
+        .image-dfem img,
+        .card img {
+          width: 60%;
+        }
+        .texte-formation, .texte-dfem {
+          font-size: 1em;
         }
       }
       
@@ -272,6 +445,13 @@
         observer.observe(section);
       });
     });
+
+
+        function toggleMenu() {
+          const navLinks = document.querySelector('.nav-links');
+          navLinks.classList.toggle('show');
+        }
+      
   </script>
 </head>
 <body>
@@ -287,6 +467,8 @@
       <a href="#faq">FAQ</a>
     </div>
   </nav>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+
 </header>
 
 <div class="hero">
