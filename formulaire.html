@@ -3,14 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Crée ton site web en 1 mois</title>
-  <link href="https://fonts.googleapis.com/css2?family=Advent+Pro:wght@700&display=swap" rel="stylesheet">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="manifest" href="site.webmanifest">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
+  <title>Inscription étape par étape</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -186,6 +179,7 @@
     <button type="button" class="btn btn-next">Suivant</button>
   </div>
 
+
   <script>
     const steps = document.querySelectorAll('.step');
     const progressBar = document.getElementById('progressBar');
@@ -194,14 +188,14 @@
     const btnChoices = document.querySelectorAll('.btn-choice');
     const stepTitle = document.getElementById('stepTitle');
     let currentStep = 0;
-  
+
     const titles = [
       "Bienvenue futur développeur !",
       "Nous voulons en savoir plus sur vous",
       "Vous êtes bientôt à la fin",
       "Merci pour votre inscription !"
     ];
-  
+
     function updateStep() {
       steps.forEach((step, index) => {
         step.classList.toggle('active', index === currentStep);
@@ -214,11 +208,11 @@
         stepTitle.style.opacity = 1;
       }, 300);
     }
-  
+
     btnNextList.forEach(btn => {
       btn.addEventListener('click', () => {
         if (!validateStep(currentStep)) {
-          alert("Remplissez tous les champs.");
+          alert("Remplissez tous les champs");
           return;
         }
         if (currentStep < steps.length - 1) {
@@ -227,7 +221,7 @@
         }
       });
     });
-  
+
     btnPrevList.forEach(btn => {
       btn.addEventListener('click', () => {
         if (currentStep > 0) {
@@ -236,7 +230,7 @@
         }
       });
     });
-  
+
     /** ✅ ✅ ✅ Correction principale : Sélection d'un choix Oui / Non **/
     btnChoices.forEach(btn => {
       btn.addEventListener('click', () => {
@@ -258,31 +252,33 @@
         else if (value.toLowerCase() === 'non') btn.classList.add('no');
       });
     });
-  
+
+    function confirmExit() {
+      const confirmQuit = confirm("Voulez-vous vraiment quitter ? Les informations saisies seront perdues.");
+      if (confirmQuit) {
+        window.location.href = "Accueil.html";
+      }
+    }
+
     function validateStep(stepIndex) {
       const step = steps[stepIndex];
       const inputs = step.querySelectorAll('input[required], textarea[required]');
       for (let input of inputs) {
-        if (!input.value.trim()) return false;
+        if (!input.value.trim()) {
+          return false;
+        }
       }
-  
-      // Vérification que tous les groupes de choix ont bien une réponse sélectionnée
       const groups = step.querySelectorAll('.choice-group');
       for (let group of groups) {
-        const hidden = group.querySelector('input[type="hidden"]');
-        if (hidden && !hidden.value.trim()) return false;
+        const choices = group.querySelectorAll('.btn-choice');
+        if (!Array.from(choices).some(choice => choice.classList.contains('selected'))) {
+          return false;
+        }
       }
-  
       return true;
     }
-  
-    function confirmExit() {
-      const confirmQuit = confirm("Voulez-vous vraiment quitter ? Les informations saisies seront perdues.");
-      if (confirmQuit) window.location.href = "index.html";
-    }
-  
+
     updateStep();
   </script>
-  
 </body>
 </html>
